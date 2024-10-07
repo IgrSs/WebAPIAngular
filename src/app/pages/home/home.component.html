@@ -1,0 +1,49 @@
+<div class="container mt-5">
+    <button class="btn btn-success w-100" [routerLink]="['/cadastro']" routerLinkActive="router-link-active" >Cadastrar novo Produto</button>
+    <div>
+        <label class="form-label">Pesquisar:</label>
+        <input class="form-control" type="text" placeholder="Qual produto deseja buscar?" (input)="search($event)">
+    </div>
+
+    <table class="table table-hover table-bordered mt-5">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Descricao</th>
+                <th>Preco</th>
+                <th>Data de validade</th>
+                <th>Situacao</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @if (produtos.length > 0) {
+                @for (produto of produtos; track $index) {
+
+                    <tr>
+                        <td>{{produto.id}}</td>
+                        <td>{{produto.descricao}}</td>
+                        <td>{{produto.preco}}</td>
+                        <td>{{produto.dataValidade}}</td>
+                        <td>{{produto.situacao == true ?"Ativo":"Inativo"}}</td>
+                        <td>
+                            <button class="btn btn-warning mx-2" [routerLink]="['/editar', produto.id]">Editar</button>
+                            <button class="btn btn-info mx-2" [routerLink]="['/detalhes', produto.id]">Detalhes</button>
+                            <button class="btn btn-danger mx-2" (click)="deletar(produto.id)">Excluir</button>
+                        </td>
+                    </tr>
+
+
+                }
+            }@else {
+                <tr class="text-center">
+                    <td colspan="5">Nenhum produto cadastrado</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+</div>
